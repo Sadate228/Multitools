@@ -1,0 +1,36 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const canvas = new fabric.Canvas('image-canvas');
+    const imageUpload = document.getElementById('image-upload');
+
+    imageUpload.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function(f) {
+            const img = new Image();
+            img.src = f.target.result;
+
+            img.onload = function() {
+                const fabricImg = new fabric.Image(img);
+                canvas.setWidth(img.width);
+                canvas.setHeight(img.height);
+                canvas.add(fabricImg);
+            };
+        };
+
+        reader.readAsDataURL(file);
+    });
+
+    document.getElementById('resize-btn').addEventListener('click', function() {
+        const width = prompt('Nouvelle largeur:');
+        const height = prompt('Nouvelle hauteur:');
+        const activeObject = canvas.getActiveObject();
+        if (activeObject) {
+            activeObject.scaleToWidth(width);
+            activeObject.scaleToHeight(height);
+            canvas.renderAll();
+        }
+    });
+
+    // Ajoutez les autres fonctionnalités ici...
+});

@@ -1,0 +1,13 @@
+document.getElementById('generate-qr-btn').addEventListener('click', function() {
+    const qrInput = document.getElementById('qr-input');
+    const qrCodeDiv = document.getElementById('qr-code');
+
+    if (qrInput.value.trim() !== '') {
+        qrCodeDiv.innerHTML = '';
+        new QRCode(qrCodeDiv, {
+            text: qrInput.value,
+            width: 128,
+            height: 128
+        });
+    }
+});
